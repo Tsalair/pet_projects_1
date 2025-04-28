@@ -1,4 +1,5 @@
 from tkinter import Tk, simpledialog, messagebox
+from random import choice
 
 
 def is_even(number):
@@ -48,6 +49,56 @@ def get_message():
     return message
 
 
+def encrypt(message):
+    encrypted_list = []
+    fake_letters = [
+        "а",
+        "б",
+        "в",
+        "г",
+        "д",
+        "е",
+        "ё",
+        "ж",
+        "з",
+        "и",
+        "й",
+        "к",
+        "л",
+        "м",
+        "н",
+        "о",
+        "п",
+        "р",
+        "с",
+        "т",
+        "у",
+        "ф",
+        "х",
+        "ц",
+        "ч",
+        "ш",
+        "щ",
+        "ъ",
+        "ы",
+        "ь",
+        "э",
+        "ю",
+        "я",
+    ]
+    for counter in range(0, len(message)):
+        encrypted_list.append(message[counter])
+        encrypted_list.append(choice(fake_letters))
+        new_message = "".join(encrypted_list)
+    return new_message
+
+
+def decrypt(message):
+    even_letters = get_even_letters(message)
+    new_message = "".join(even_letters)
+    return new_message
+
+
 root = Tk()
 
 while True:
@@ -56,13 +107,15 @@ while True:
 
     if task == "з" or task == "зашифровать":
         message = get_message()
-
-        encrypted = swap_letters(message)
-
+        swap_letters_message = swap_letters(message)
+        encrypted = encrypt(swap_letters_message)
         messagebox.showinfo("Зашифрованное сообщение", encrypted)
+
     elif task == "р" or task == "расшифровать":
         message = get_message()
-        decrypted = swap_letters(message)
+        swap_letters_message = decrypt(message)
+        decrypted = swap_letters(swap_letters_message)
         messagebox.showinfo("Расшифрованное сообщение", decrypted)
+
     else:
         break
